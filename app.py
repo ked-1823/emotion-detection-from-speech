@@ -8,13 +8,15 @@ import tensorflow as tf
 # -------------------------
 model = tf.keras.models.load_model("best_model.h5")
 
-# Replace this with your encoder categories
-enc_categories = ['neutral','happy','sad','angry','fear']  # Example
+# Match your encoder categories
+enc_categories = ['angry', 'disgust', 'fear', 'happy', 'neutral', 'ps', 'sad']
 
 # -------------------------
 # 2) Normalize audio
 # -------------------------
 def normalize_audio(y):
+    if np.max(np.abs(y)) == 0:
+        return y
     return y / np.max(np.abs(y))
 
 # -------------------------
@@ -44,7 +46,6 @@ def predict_emotion_audio(audio, sr):
 # 5) Streamlit UI
 # -------------------------
 st.title("🎤 Voice Emotion Detection")
-
 st.write("Upload a short audio file (around 3 seconds) for emotion prediction.")
 
 uploaded_file = st.file_uploader("Upload audio", type=["wav", "mp3"])
