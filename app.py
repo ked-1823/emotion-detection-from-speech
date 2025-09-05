@@ -50,6 +50,10 @@ st.write("Upload a short audio file (around 3 seconds) for emotion prediction.")
 
 uploaded_file = st.file_uploader("Upload audio", type=["wav", "mp3"])
 if uploaded_file is not None:
+    # Show audio player
+    st.audio(uploaded_file, format="audio/wav")
+
+    # Process and predict
     y, sr = librosa.load(uploaded_file, sr=None)
     predicted_emotion = predict_emotion_audio(y, sr)
     st.write(f"Predicted Emotion: **{predicted_emotion}**")
