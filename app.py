@@ -1,8 +1,6 @@
 import streamlit as st
-import sounddevice as sd
 import numpy as np
 import librosa
-import tempfile
 import tensorflow as tf
 
 # -------------------------
@@ -20,7 +18,7 @@ def normalize_audio(y):
     return y / np.max(np.abs(y))
 
 # -------------------------
-# 3) Extract MFCC for real-time audio
+# 3) Extract MFCC
 # -------------------------
 def extract_mfcc_real(y, sr, max_len=130, n_mfcc=40):
     mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=n_mfcc).T
@@ -45,19 +43,12 @@ def predict_emotion_audio(audio, sr):
 # -------------------------
 # 5) Streamlit UI
 # -------------------------
-st.title("🎤 Real-Time Voice Emotion Detection")
+st.title("🎤 Voice Emotion Detection")
 
-duration = st.slider("Recording Duration (seconds)", 1, 5, 3)
+st.write("Upload a short audio file (around 3 seconds) for emotion prediction.")
 
-if st.button("Record"):
-    st.info("Recording...")
-    fs = 22050  # Sampling rate
-    recording = sd.rec(int(duration * fs), samplerate=fs, channels=1)
-    sd.wait()
-    st.success("Recording finished!")
-
-    audio = recording.flatten()
-
-    # Predict emotion
-    predicted_emotion = predict_emotion_audio(audio, fs)
+uploaded_file = st.file_uploader("Upload audio", type=["wav", "mp3"])
+if uploaded_file is not None:
+    y, sr = librosa.load(uploaded_file, sr=None)
+    predicted_emotion = predict_emotion_audio(y, sr)
     st.write(f"Predicted Emotion: **{predicted_emotion}**")
