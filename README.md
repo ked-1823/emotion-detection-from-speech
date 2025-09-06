@@ -28,8 +28,16 @@ It is trained on datasets like [Toronto Emotional Speech Set (TESS)] or other pu
 ---
 
 ## 🔹 Installation
+Test online : https://emotion-detection-from-speech-p5ympxcycktjayvuweiege.streamlit.app/
+
+DEMO VIDEO : https://drive.google.com/file/d/10TEFJbbBL-L_blbLmdjP44ml38mvxicm/view?usp=sharing
+
+Screenshot :
+<img width="945" height="498" alt="image" src="https://github.com/user-attachments/assets/aa333275-0a2e-4a1e-bf37-f238c9fe392c" />
 
 Clone the repository:
 ```bash
 git clone https://github.com/your-username/speech-emotion-detection.git
 cd emotion-detection-from-speech
+
+
